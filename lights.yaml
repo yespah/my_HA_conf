@@ -1,0 +1,25 @@
+- platform: mqtt
+  name: "Kitchen Light"
+  state_topic: "stat/sonoff_2/POWER"
+  command_topic: "cmnd/sonoff_2/POWER"
+  availability_topic: "tele/sonoff_2/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+#- platform: rpi_rf
+#  gpio: 17
+#  name: "Test Light"
+#  code_on: 1234567
+#  code_off: 1234568
+- platform: mqtt
+  name: "IKEA 2"
+  state_topic: "smartthings/IKEA 2/switch"
+  command_topic: "smartthings/IKEA 2/switch"
+  payload_on: "on"
+  payload_off: "off"
+  payload_available: "online"
+  payload_not_available: "offline"
+  retain: true

@@ -1,0 +1,21 @@
+  - platform: pilight
+    name: 'Skab1'
+    protocol: 'ev1527'
+    variable: 'state'
+    payload:
+      unitcode: 926202
+    payload_on: 'opened'
+    disarm_after_trigger: True
+    reset_delay_sec: 120
+    icon: mdi:lock-open
+
+  - platform: pilight
+    name: 'Skab2'
+    protocol: 'ev1527'
+    variable: 'state'
+    payload:
+      unitcode: 599487
+    payload_on: 'opened'
+    disarm_after_trigger: True
+    reset_delay_sec: 300
+    icon: mdi:lock-open

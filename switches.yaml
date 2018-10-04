@@ -1,0 +1,94 @@
+- platform: pilight
+  switches:
+#    Coffee Machine:
+#      on_code:
+#        protocol: nexa_switch
+#        unit: 15
+#        id: 3
+#        'on': 1
+#      off_code:
+#        protocol: nexa_switch
+#        unit: 15#
+#        id: 3
+#        'off': 1
+    Espresso:
+      on_code:
+        protocol: nexa_switch
+        unit: 2
+        id: 1
+        'on': 1
+      off_code:
+        protocol: nexa_switch
+        unit: 2
+        id: 1
+        'off': 1
+    Kitchen Speaker:
+      on_code:
+        protocol: quigg_gt1000 
+        unit: 0
+        id: 9
+        'on': 1
+      off_code:
+        protocol: quigg_gt1000 
+        unit: 0
+        id: 9
+        'off': 1
+    Stereo:
+      on_code:
+        protocol: quigg_gt1000 
+        unit: 0
+        id: 3
+        'on': 1
+      off_code:
+        protocol: quigg_gt1000 
+        unit: 0
+        id: 3
+        'off': 1
+    Floor Light:
+      on_code:
+        protocol: quigg_gt1000 
+        unit: 0
+        id: 0
+        'on': 1
+      off_code:
+        protocol: quigg_gt1000 
+        unit: 0
+        id: 0
+        'off': 1
+#    Xmas Tree:
+#      on_code:
+#        protocol: quigg_gt1000
+#        unit: 0
+#        id: 9
+#        'on': 1
+#      off_code:
+#        protocol: quigg_gt1000
+#        unit: 0
+#        id: 9
+#        'off': 1
+#    TVonoff:
+#      on_code:
+#        protocol: xbmc
+#        server: 127.0.0.1
+#        port: 8080
+#        action: 'ActivateWindow(10000)'
+#      off_code:
+#        protocol: xbmc
+#        server: 127.0.0.1
+#        port: 8080
+#        action: 'ActivateScreensaver'
+#- platform: command_line
+#  switches:
+#    tv_power:
+#      command_on:  'kodi-send --host=192.168.72.100 --port=8080 --action="ActivateWindow(10000)"'
+#      command_off:  'kodi-send --host=192.168.72.100 --port=8080 --action="ActivateScreensaver"'
+- platform: mqtt
+  name: "MQTT knap"
+  state_topic: "home/living_room/kontakt1"
+  command_topic: "home/living_room/kontakt1/set"
+  availability_topic: "home/bedroom/switch1/available"
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  qos: 0
+  retain: true

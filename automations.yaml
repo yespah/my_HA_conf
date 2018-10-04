@@ -1,0 +1,192 @@
+- action:
+  - alias: Floorlight
+    data:
+      entity_id: switch.floor_light
+    service: switch.turn_on
+  alias: Solnedgang
+  condition: []
+  id: '1504645351270'
+  trigger:
+  - event: sunset
+    offset: 00:15:00
+    platform: sun
+- action:
+  - alias: Tænd køkken lyd
+    data:
+      entity_id: switch.kitchen_speaker
+    service: switch.turn_on
+  alias: Køkkentid on
+  condition: []
+  id: '1504646194795'
+  trigger:
+  - at: '17:00:00'
+    platform: time
+- action:
+  - alias: sluk køkken lyd
+    data:
+      entity_id: switch.kitchen_speaker
+    service: switch.turn_off
+  alias: Køkkentid slut
+  condition: []
+  id: '1505050831732'
+  trigger:
+  - at: '19:00'
+    platform: time
+- action:
+  - alias: Sluk Floor Light
+    data:
+      entity_id: switch.floor_light
+    service: switch.turn_off
+  alias: Godnat Floor Light
+  condition: []
+  id: '1505413739031'
+  trigger:
+  - at: 00:00:00
+    platform: time
+- alias: Play DR P1
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: DR P1
+  action:
+    service: media_player.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: http://live-icy.gss.dr.dk:80/A/A03H.mp3
+      media_content_type: audio/mp4
+  id: 40222b634c9144c995932efdce6c35c3
+- alias: Play DR P6 Beat
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: DR P6 Beat
+  action:
+    service: media_player.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: http://live-icy.gss.dr.dk:80/A/A29H.mp3
+      media_content_type: audio/mp4
+  id: 3d0a368dcfd34322b52e45010980c26f
+- alias: Play DR Nyheder
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: DR Nyheder
+  action:
+    service: media_player.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: http://live-icy.gss.dr.dk:80/A/A02L.mp3
+      media_content_type: audio/mp4
+  id: 14f51c5baa7a4aff8fa4b0c2d4a9c15f
+- alias: Play Radio24syv
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: Radio24syv
+  action:
+    service: media_player.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: http://stream.taleradio.dk/web128
+      media_content_type: audio/mp4
+  id: 3ba5eae78d5542389b7abea477371ae2
+- alias: Stop the Radio Stations
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: None
+  action:
+    service: media_player.turn_off
+    data:
+      entity_id: media_player.living_room_stereo
+  id: b8669a1015d64e489da33d04dc3b64ff
+- action:
+  - alias: Desliga a cafe
+    data:
+      entity_id: switch.espresso
+    service: switch.turn_off
+  - alias: Desliga a stereo
+    data:
+      entity_id: switch.stereo
+    service: switch.turn_off
+  alias: Não na casa
+  condition: []
+  id: '1510699052058'
+  trigger:
+  - entity_id: device_tracker.oneplus_5
+    from: home
+    platform: state
+    to: not_home
+- action:
+  - delay: 00:27:00
+  - alias: Sluk espresso apperat
+    data:
+      entity_id: switch.espresso
+    service: switch.turn_off
+  alias: Sluk for kaffen
+  condition: []
+  id: '1511775784801'
+  trigger:
+  - entity_id: switch.espresso
+    from: 'off'
+    platform: state
+    to: 'on'
+- action:
+  - data:
+      entity_id: switch.xmas_tree
+    service: switch.turn_on
+  alias: Juletræ
+  condition: []
+  id: '1512469704112'
+  trigger:
+  - event: sunset
+    platform: sun
+- action:
+  - data:
+      entity_id: switch.xmas_tree
+    service: switch.turn_off
+  alias: Sluk juletræ
+  condition: []
+  id: '1512469866518'
+  trigger:
+  - event: sunrise
+    offset: 01:00:00
+    platform: sun
+- action:
+  - data:
+      entity_id: light.cama
+    service: light.turn_off
+  - data:
+      entity_id: light.loft
+    service: light.turn_off
+  alias: Turn off lights Naomi
+  condition: []
+  id: '1515413676404'
+  trigger:
+  - at: 09:00:00
+    platform: time
+- id: '1538594491500'
+  alias: Turn espresso on via ifttt
+  trigger:
+  - entity_id: input_boolean.espresso
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      event: espresso_on
+    service: ifttt.trigger
+- id: '1538594909979'
+  alias: Turn espresso off via ifttt
+  trigger:
+  - entity_id: input_boolean.espresso
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      event: espresso_off
+    service: ifttt.trigger

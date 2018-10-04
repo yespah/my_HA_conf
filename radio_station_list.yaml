@@ -1,0 +1,12 @@
+# Define our dropdown list
+radio_station2:
+  name: Radio Stations
+  options:
+    - DR P1
+    - DR P6 Beat
+    - DR Nyheder
+    - Radio24syv
+    - None
+  initial: None
+  icon: mdi:radio
+

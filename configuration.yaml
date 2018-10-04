@@ -1,0 +1,217 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+
+  latitude: 55.664
+  longitude: 12.502
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Copenhagen
+  # Customization file
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables hass.io
+#hassio:
+
+# Enables configuration UI
+config:
+
+# Enables REST api                
+api:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  api_password: !secret http_passwd
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+  base_url: schleiss.duckdns.org
+  ssl_certificate: !secret ssl_fullchain
+  ssl_key: !secret ssl_privkey
+  # cors_allowed_origins:
+  #  - http://hassbian.local:7080
+
+# Add SonWEB to side panel
+
+#panel_iframe:
+#  sonweb:
+#    title: SonWEB
+#    icon: mdi:tablet-ipad
+#    url: http://hassbian.local:9541
+  # Add Lovelace to side panel
+#  lovelace_ui:
+#    title: Lovelace
+#    icon: mdi:sitemap
+#    url: https://schleiss.duckdns.org/lovelace
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-update
+
+
+
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+#conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: yr
+    name: Vejr
+    forecast: 24
+
+# Text to speech
+tts:
+  - platform: google
+
+group: !include groups.yaml
+zone: !include zones.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+###Added configs###
+media_player:
+  - platform: samsungtv
+    host: 192.168.72.99
+    name: TV
+    mac: 78:ab:bb:c9:39:eb
+#  - platform: dlna_dmr
+#    url: http://192.168.72.99:9197/dmr
+#    name: tvplayer
+
+
+
+wemo:
+  static:
+#    - 192.168.72.210
+#    - 192.168.72.211
+    - 192.168.72.181
+
+pilight:
+#  host: 127.0.0.1
+  host: retropie.local
+  port: 5000
+
+switch: !include switches.yaml
+light: !include lights.yaml
+
+emulated_hue:
+#  host_ip: hassbian.local
+#  listen_port: 80
+  expose_by_default: true
+  exposed_domains:
+    - switch
+    - media_player
+    - light
+
+mqtt:
+#  broker: core-mosquitto
+  broker: localhost
+  username: !secret mqtt_user
+  password: !secret mqtt_passwd
+
+ifttt:
+  key: !secret ifttt_key
+
+device_tracker:
+#  - platform: bluetooth_tracker
+#  - platform: gpslogger
+#  - platform: owntracks
+#  - platform: locative
+  - platform: google_maps
+    username: !secret googl_usr
+    password: !secret googl_pwd
+  
+
+tradfri:
+  host: 192.168.72.134
+  allow_tradfri_groups: false
+
+input_select: !include radio_station_list.yaml
+
+binary_sensor: !include cabinets.yaml
+
+#Cloud integration
+cloud:
+  alexa:
+    filter:
+      include_entities:
+        - light.naomi
+        - light.kitchen_light
+      include_domains:
+        - switch
+#      exclude_entities:
+#        - switch.outside
+#    entity_config:
+#      light.kitchen:
+#        name: Custom Name for Alexa
+#        description: The light in the kitchen
+#      switch.stairs:
+#        display_categories: LIGHT
+  google_actions:
+    filter:
+      include_entities:
+        - light.naomi
+        - light.kitchen_light
+      include_domains:
+        - switch
+
+# Google Assistant
+google_assistant:
+  project_id: !secret ggl_project_id
+  client_id: !secret ggl_client_id
+  access_token: !secret ggl_acces_token
+#  agent_user_id: [a string to identify user. If not provided, the component will generate one.]
+  agent_user_id: ggl_agent_user_id
+#  api_key: [a Homegraph API Key generated for the Google Actions project]
+  exposed_domains:
+    - switch
+    - light
+    - group
+  entity_config:
+    switch.floor_light:
+      name: Gazza
+      aliases:
+        - bright lights
+        - entry lights
+
+input_boolean:
+    espresso:
+      name: Espresso
+      icon: mdi:coffee
+      initial: off
+
+    pavoni:
+      name: LaPavoni
+      icon: mdi:coffee
+      initial: off
+
+tuya:
+  username: !secret tuya_usr
+  password: !secret tuya_passwd
+  country_code: 45
+  platform: smart_life
