@@ -2,6 +2,13 @@
 *
 !*.yaml
 !.gitignore
-secrets.yaml
+*.conf
+*.txt
+*.log
+.storage
+.cloud
+.google.token
+ip_bans.yamlsecrets.yaml
 known_devices.yaml
 zones.yaml
+secrets.yaml

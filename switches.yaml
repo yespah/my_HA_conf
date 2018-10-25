@@ -8,7 +8,7 @@
 #        'on': 1
 #      off_code:
 #        protocol: nexa_switch
-#        unit: 15#
+#        unit: 15
 #        id: 3
 #        'off': 1
     Espresso:
@@ -91,4 +91,14 @@
   payload_off: "OFF"
   optimistic: false
   qos: 0
-  retain: true
+  retain: false
+- platform: mqtt
+  name: "Sonoff plug"
+  state_topic: "stat/sonoff_plug/POWER1"
+  command_topic: "cmnd/sonoff_plug/POWER"
+  availability_topic: "tele/sonoff_plug/LWT"
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  qos: 0
+  retain: false

@@ -13,6 +13,9 @@ homeassistant:
   time_zone: Europe/Copenhagen
   # Customization file
   customize: !include customize.yaml
+  auth_providers:
+   - type: homeassistant
+   - type: legacy_api_password
 
 # Enables the frontend
 frontend:
@@ -23,6 +26,9 @@ frontend:
 # Enables configuration UI
 config:
 
+# Enables the websocket_api    
+websocket_api:
+
 # Enables REST api                
 api:
 
@@ -32,33 +38,30 @@ http:
   api_password: !secret http_passwd
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
-  base_url: schleiss.duckdns.org
+  base_url: !secret my_url
   ssl_certificate: !secret ssl_fullchain
   ssl_key: !secret ssl_privkey
   # cors_allowed_origins:
   #  - http://hassbian.local:7080
 
-# Add SonWEB to side panel
 
 #panel_iframe:
+# Add SonWEB to side panel = panel_iframe
 #  sonweb:
 #    title: SonWEB
 #    icon: mdi:tablet-ipad
 #    url: http://hassbian.local:9541
-  # Add Lovelace to side panel
-#  lovelace_ui:
-#    title: Lovelace
-#    icon: mdi:sitemap
-#    url: https://schleiss.duckdns.org/lovelace
+# Add pilight server
+#  pilight:
+#    titel: 'PiLight'
+#    icon: mdi:lightbulb-outline
+#    url: 'http://192.168.72.166:5001'
 
 # Checks for available updates
 # Note: This component will send some information about your system to
 # the developers to assist with development of Home Assistant.
 # For more information, please see:
 # https://home-assistant.io/blog/2016/10/25/explaining-the-update
-
-
-
 updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
@@ -83,6 +86,24 @@ sensor:
   - platform: yr
     name: Vejr
     forecast: 24
+    monitored_conditions:
+      - temperature
+ #     - symbol
+      - precipitation
+      - windSpeed
+      - pressure
+      - windDirection
+      - humidity
+      - fog
+      - cloudiness
+ #     - lowClouds
+ #     - mediumClouds
+ #     - highClouds
+ #     - dewpointTemperature
+
+weather:
+  - platform: openweathermap
+    api_key: !secret owm_api_key
 
 # Text to speech
 tts:
@@ -106,14 +127,16 @@ media_player:
 
 
 wemo:
-  static:
+#  static:
 #    - 192.168.72.210
 #    - 192.168.72.211
-    - 192.168.72.181
+#    - 192.168.72.181
 
 pilight:
+#  host: 192.168.72.200
 #  host: 127.0.0.1
-  host: retropie.local
+#  host: retropie.local
+  host: 192.168.72.166
   port: 5000
 
 switch: !include switches.yaml
@@ -125,11 +148,11 @@ emulated_hue:
   expose_by_default: true
   exposed_domains:
     - switch
-    - media_player
+#    - media_player
     - light
 
 mqtt:
-#  broker: core-mosquitto
+#  broker: core-mosquitto ## Hassio
   broker: localhost
   username: !secret mqtt_user
   password: !secret mqtt_passwd
@@ -145,7 +168,14 @@ device_tracker:
   - platform: google_maps
     username: !secret googl_usr
     password: !secret googl_pwd
-  
+  - platform: nmap_tracker
+    hosts: 
+      - 192.168.72.101-133
+    exclude:
+      - 192.168.72.115
+      - 192.168.72.166
+      - 192.168.72.200
+    scan_options: " --privileged -sP "
 
 tradfri:
   host: 192.168.72.134
@@ -156,14 +186,14 @@ input_select: !include radio_station_list.yaml
 binary_sensor: !include cabinets.yaml
 
 #Cloud integration
-cloud:
-  alexa:
-    filter:
-      include_entities:
-        - light.naomi
-        - light.kitchen_light
-      include_domains:
-        - switch
+#cloud:
+#  alexa:
+#    filter:
+#      include_entities:
+#        - light.naomi
+#        - light.kitchen_light
+#      include_domains:
+#        - switch
 #      exclude_entities:
 #        - switch.outside
 #    entity_config:
@@ -172,32 +202,32 @@ cloud:
 #        description: The light in the kitchen
 #      switch.stairs:
 #        display_categories: LIGHT
-  google_actions:
-    filter:
-      include_entities:
-        - light.naomi
-        - light.kitchen_light
-      include_domains:
-        - switch
+#  google_actions:
+#    filter:
+#      include_entities:
+#        - light.naomi
+#        - light.kitchen_light
+#      include_domains:
+#        - switch
 
 # Google Assistant
-google_assistant:
-  project_id: !secret ggl_project_id
-  client_id: !secret ggl_client_id
-  access_token: !secret ggl_acces_token
+#google_assistant:
+#  project_id: !secret ggl_project_id
+#  client_id: !secret ggl_client_id
+#  access_token: !secret ggl_acces_token
 #  agent_user_id: [a string to identify user. If not provided, the component will generate one.]
-  agent_user_id: ggl_agent_user_id
+#  agent_user_id: ggl_agent_user_id
 #  api_key: [a Homegraph API Key generated for the Google Actions project]
-  exposed_domains:
-    - switch
-    - light
-    - group
-  entity_config:
-    switch.floor_light:
-      name: Gazza
-      aliases:
-        - bright lights
-        - entry lights
+#  exposed_domains:
+#    - switch
+#    - light
+#    - group
+#  entity_config:
+#    switch.floor_light:
+#      name: Gazza
+#      aliases:
+#        - bright lights
+#        - entry lights
 
 input_boolean:
     espresso:
@@ -215,3 +245,11 @@ tuya:
   password: !secret tuya_passwd
   country_code: 45
   platform: smart_life
+
+weblink:
+  entities:
+    - name: PiLight
+      url: http://192.168.72.166:5001/
+
+media_extractor:
+  default_query: best

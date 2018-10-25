@@ -6,6 +6,9 @@ radio_station2:
     - DR P6 Beat
     - DR Nyheder
     - Radio24syv
+    - DR P1 Orientering
+    - DR P1 Mennesker og medier
+    - DR P1 Verden ifoelge Gram
     - None
   initial: None
   icon: mdi:radio

@@ -1,0 +1,106 @@
+title: Our Apartment
+# Include external resources
+resources:
+  - url: /local/my-custom-card.js
+    type: js
+#  - url: /local/my-webfont.css
+#    type: css
+
+# Optional background for all views. Check https://developer.mozilla.org/en-US/docs/Web/CSS/background for more examples.
+background: center / cover no-repeat url("/background.png") fixed
+# Exclude entities from "Unused entities" view
+excluded_entities:
+#  - weblink.router
+views:
+    # View tab title.
+  - title: Livingroom
+    # Optional unique id for direct access /lovelace/${id}
+    id: livingroom
+    # Optional background (overwrites the global background).
+    background: radial-gradient(crimson, skyblue)
+    # Each view can have a different theme applied. Theme should be defined in the frontend.
+    theme: dark-mode
+    # The cards to show on this view.
+    cards:
+        # The markdown card will render markdown text.
+      - type: markdown
+        title: Lovelace
+        content: >
+          Welcome to your **Lovelace UI**.
+
+        # The filter card will filter entities for their state
+      - type: entity-filter
+        entities:
+          - device_tracker.google_maps_109806200856715302129_94652d7fc5da
+          - device_tracker.joselene_a0cc2b0243b6 
+        state_filter:
+          - 'home'
+        card:
+          type: glance
+          title: People that are home
+
+        # The picture entity card will represent an entity with a picture
+      - type: picture-entity
+        image: https://www.home-assistant.io/images/default-social.png
+        entity: switch.floor_light
+
+      - type: media-control
+        entity: media_player.tv
+
+      - type: picture-glance
+        image: /local/images/living_room.jpg
+        title: Living room
+        entities:
+        - switch.floor_light
+        - light.midroom
+
+
+
+    # Specify a tab icon if you want the view tab to be an icon.
+  - icon: mdi:home-assistant
+    # Title of the view. Will be used as the tooltip for tab icon
+    # View tab title.
+  - title: Kitchen
+    cards:
+      - type: entities
+        # Title of the entities card
+        title: Switches
+        entities:
+          - light.kitchen_light
+          - switch.04200101b4e62d13b9e5    
+      - type: media-control
+        entity: media_player.living_room_stereo
+
+    # View tab title.
+  - title: Bedroom
+    # View tab title.
+    cards:
+        # Entities card will take a list of entities and show their state.
+      - type: entities
+        # Title of the entities card
+        title: Light and Switches
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - light.kitchen_light
+          - switch.04200101b4e62d13b9e5
+          - entity: light.tradfri_bulb_e27_cws_opal_600lm
+            # Override the name to use
+            name: Colour Light
+
+      - type: entities
+        title: Players
+        entities:
+          - entity: media_player.shield_android_tv
+            name: Screen casting 
+          - entity: media_player.shield
+            name: Shield
+          - entity: media_player.living_room_stereo
+            name: 'Radio Station'
+
+      - type: map
+        default_zoom: 12
+        entities:
+        - entity: device_tracker.google_maps_109806200856715302129
+        - zone.home
+

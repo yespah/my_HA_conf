@@ -55,18 +55,54 @@
       media_content_id: http://live-icy.gss.dr.dk:80/A/A03H.mp3
       media_content_type: audio/mp4
   id: 40222b634c9144c995932efdce6c35c3
-- alias: Play DR P6 Beat
+- alias: Play latest DR P1 Orientering
   trigger:
     platform: state
     entity_id: input_select.radio_station2
+    to: DR P1 Orientering
+  action:
+    service: media_extractor.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: https://www.dr.dk/mu/MediaRedirector/WithFileExtension/orientering-2018-10-23.mp3?highestBitrate=True&podcastDownload=True
+      media_content_type: music
+  id: 20222b634c9144c995932efdce6c35c3
+- alias: Play latest DR P1 Mennesker og medier
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: DR P1 Mennesker og medier
+  action:
+    service: media_extractor.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: https://www.dr.dk/mu/MediaRedirector/WithFileExtension/mennesker-og-medier-2018-10-19.mp3?highestBitrate=True&podcastDownload=True
+      media_content_type: music
+  id: 10222b634c9144c995932efdce6c35c3
+- alias: Play latest DR P1 Verden ifoelge Gram
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station2
+    to: DR P1 Verden ifoelge Gram
+  action:
+    service: media_extractor.play_media
+    data:
+      entity_id: media_player.living_room_stereo
+      media_content_id: https://www.dr.dk/mu/MediaRedirector/WithFileExtension/verden-ifoelge-gram-2018-10-23.mp3?highestBitrate=True&podcastDownload=True
+      media_content_type: music
+  id: 00222b634c9144c995932efdce6c35c3
+- id: 3d0a368dcfd34322b52e45010980c26f
+  alias: Play DR P6 Beat
+  trigger:
+  - entity_id: input_select.radio_station2
+    platform: state
     to: DR P6 Beat
   action:
-    service: media_player.play_media
-    data:
+  - data:
       entity_id: media_player.living_room_stereo
       media_content_id: http://live-icy.gss.dr.dk:80/A/A29H.mp3
       media_content_type: audio/mp4
-  id: 3d0a368dcfd34322b52e45010980c26f
+    service: media_player.play_media
 - alias: Play DR Nyheder
   trigger:
     platform: state
@@ -79,18 +115,18 @@
       media_content_id: http://live-icy.gss.dr.dk:80/A/A02L.mp3
       media_content_type: audio/mp4
   id: 14f51c5baa7a4aff8fa4b0c2d4a9c15f
-- alias: Play Radio24syv
+- id: 3ba5eae78d5542389b7abea477371ae2
+  alias: Play Radio24syv
   trigger:
+  - entity_id: input_select.radio_station2
     platform: state
-    entity_id: input_select.radio_station2
     to: Radio24syv
   action:
-    service: media_player.play_media
-    data:
+  - data:
       entity_id: media_player.living_room_stereo
       media_content_id: http://stream.taleradio.dk/web128
       media_content_type: audio/mp4
-  id: 3ba5eae78d5542389b7abea477371ae2
+    service: media_player.play_media
 - alias: Stop the Radio Stations
   trigger:
     platform: state
@@ -101,37 +137,40 @@
     data:
       entity_id: media_player.living_room_stereo
   id: b8669a1015d64e489da33d04dc3b64ff
-- action:
+- id: '1510699052058'
+  alias: Não na casa
+  trigger:
+  - entity_id: device_tracker.google_maps_109806200856715302129
+    event: leave
+    platform: zone
+    zone: zone.home
+  condition: []
+  action:
   - alias: Desliga a cafe
     data:
-      entity_id: switch.espresso
+      entity_id: switch.80040667bcddc20119ad
     service: switch.turn_off
   - alias: Desliga a stereo
     data:
       entity_id: switch.stereo
     service: switch.turn_off
-  alias: Não na casa
-  condition: []
-  id: '1510699052058'
+  - data:
+      entity_id: media_player.living_room_stereo
+    service: media_player.media_stop
+- id: '1511775784801'
+  alias: Brænd ikke kaffen
   trigger:
-  - entity_id: device_tracker.oneplus_5
-    from: home
-    platform: state
-    to: not_home
-- action:
-  - delay: 00:27:00
-  - alias: Sluk espresso apperat
-    data:
-      entity_id: switch.espresso
-    service: switch.turn_off
-  alias: Sluk for kaffen
-  condition: []
-  id: '1511775784801'
-  trigger:
-  - entity_id: switch.espresso
+  - entity_id: switch.80040667bcddc20119ad
     from: 'off'
     platform: state
     to: 'on'
+  condition: []
+  action:
+  - delay: 00:27:00
+  - alias: Sluk espresso apperat
+    data:
+      entity_id: switch.80040667bcddc20119ad
+    service: switch.turn_off
 - action:
   - data:
       entity_id: switch.xmas_tree
@@ -190,3 +229,117 @@
   - data:
       event: espresso_off
     service: ifttt.trigger
+- id: '1538994896282'
+  alias: Turn Pavoni on via ifttt
+  trigger:
+  - entity_id: input_boolean.pavoni
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      event: la_pavoni_on
+    service: ifttt.trigger
+- id: '1538994905975'
+  alias: Turn Pavoni on via ifttt
+  trigger:
+  - entity_id: input_boolean.pavoni
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      event: la_pavoni_on
+    service: ifttt.trigger
+- id: '1538994989733'
+  alias: Turn Pavoni off via ifttt
+  trigger:
+  - entity_id: input_boolean.pavoni
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      event: la_pavoni_off
+    service: ifttt.trigger
+- id: '1538994995891'
+  alias: Turn Pavoni off via ifttt
+  trigger:
+  - entity_id: input_boolean.pavoni
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      event: la_pavoni_off
+    service: ifttt.trigger
+- id: '1539250840798'
+  alias: Middags radioavisen
+  trigger:
+  - at: '12:00:00'
+    platform: time
+  condition:
+  - condition: zone
+    entity_id: device_tracker.google_maps_109806200856715302129_94652d7fc5da
+    zone: zone.home
+  action:
+  - data:
+      entity_id: ' automation.play_dr_p1'
+    service: automation.trigger
+- id: '1539432627835'
+  alias: Natlys
+  trigger:
+  - entity_id: light.67700627dc4f22333a4f
+    from: unavailable
+    platform: state
+    to: available
+  condition:
+  - after: '21:30:00'
+    before: 07:00:00
+    condition: time
+  action:
+  - data:
+      data:
+        brightness: 70
+        entity_id: light.67700627dc4f22333a4f
+        rgb_color:
+        - 255
+        - 0
+        - 0
+    service: light.turn_on
+- id: '1539432632738'
+  alias: Natlys
+  trigger:
+  - entity_id: light.67700627dc4f22333a4f
+    from: unavailable
+    platform: state
+    to: available
+  condition:
+  - after: '21:30:00'
+    before: 07:00:00
+    condition: time
+  action:
+  - data:
+      color_name: red
+      entity_id: light.67700627dc4f22333a4f
+    service: light.turn_on
+- id: '1539434017804'
+  alias: Dagslys
+  trigger:
+  - entity_id: light.67700627dc4f22333a4f
+    from: unavailable
+    platform: state
+  condition:
+  - after: 07:00:30
+    before: '21:29:30'
+    condition: time
+  action:
+  - alias: ''
+    data:
+      color_name: white
+      entity_id: light.67700627dc4f22333a4f
+    service: light.turn_on

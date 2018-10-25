@@ -8,18 +8,18 @@
   payload_off: "OFF"
   payload_available: "Online"
   payload_not_available: "Offline"
-  retain: true
+  retain: false
 #- platform: rpi_rf
 #  gpio: 17
 #  name: "Test Light"
 #  code_on: 1234567
 #  code_off: 1234568
-- platform: mqtt
-  name: "IKEA 2"
-  state_topic: "smartthings/IKEA 2/switch"
-  command_topic: "smartthings/IKEA 2/switch"
-  payload_on: "on"
-  payload_off: "off"
-  payload_available: "online"
-  payload_not_available: "offline"
-  retain: true
+#- platform: mqtt
+ # name: "IKEA 2"
+  #state_topic: "smartthings/IKEA 2/switch"
+ # command_topic: "smartthings/IKEA 2/switch"
+ # payload_on: "on"
+ # payload_off: "off"
+ # payload_available: "online"
+ # payload_not_available: "offline"
+ # retain: false
