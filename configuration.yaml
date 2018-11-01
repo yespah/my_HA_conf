@@ -82,24 +82,10 @@ logbook:
 sun:
 
 # Weather prediction
-sensor:
+sensor
   - platform: yr
-    name: Vejr
-    forecast: 24
-    monitored_conditions:
-      - temperature
- #     - symbol
-      - precipitation
-      - windSpeed
-      - pressure
-      - windDirection
-      - humidity
-      - fog
-      - cloudiness
- #     - lowClouds
- #     - mediumClouds
- #     - highClouds
- #     - dewpointTemperature
+    name: Vejret senere
+    forecast: 8
 
 weather:
   - platform: openweathermap
@@ -114,7 +100,6 @@ zone: !include zones.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 
-###Added configs###
 media_player:
   - platform: samsungtv
     host: 192.168.72.99
@@ -141,6 +126,7 @@ pilight:
 
 switch: !include switches.yaml
 light: !include lights.yaml
+sensor: !include sensos.yaml
 
 emulated_hue:
 #  host_ip: hassbian.local
@@ -251,5 +237,3 @@ weblink:
     - name: PiLight
       url: http://192.168.72.166:5001/
 
-media_extractor:
-  default_query: best

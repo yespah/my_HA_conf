@@ -61,11 +61,11 @@
     entity_id: input_select.radio_station2
     to: DR P1 Orientering
   action:
-    service: media_extractor.play_media
-    data:
+    service: media_player.play_media
+    data_template:
       entity_id: media_player.living_room_stereo
-      media_content_id: https://www.dr.dk/mu/MediaRedirector/WithFileExtension/orientering-2018-10-23.mp3?highestBitrate=True&podcastDownload=True
-      media_content_type: music
+      media_content_id: "{{states.sensor.dr_p1_orientering.state}}"
+      media_content_type: "audio/mp4"
   id: 20222b634c9144c995932efdce6c35c3
 - alias: Play latest DR P1 Mennesker og medier
   trigger:
@@ -73,11 +73,11 @@
     entity_id: input_select.radio_station2
     to: DR P1 Mennesker og medier
   action:
-    service: media_extractor.play_media
-    data:
+    service: media_player.play_media
+    data_template:
       entity_id: media_player.living_room_stereo
-      media_content_id: https://www.dr.dk/mu/MediaRedirector/WithFileExtension/mennesker-og-medier-2018-10-19.mp3?highestBitrate=True&podcastDownload=True
-      media_content_type: music
+      media_content_id: "{{states.sensor.dr_p1_mennesker_og_medier.state}}"
+      media_content_type: "audio/mp4"
   id: 10222b634c9144c995932efdce6c35c3
 - alias: Play latest DR P1 Verden ifoelge Gram
   trigger:
@@ -85,11 +85,11 @@
     entity_id: input_select.radio_station2
     to: DR P1 Verden ifoelge Gram
   action:
-    service: media_extractor.play_media
-    data:
+    service: media_player.play_media
+    data_template:
       entity_id: media_player.living_room_stereo
-      media_content_id: https://www.dr.dk/mu/MediaRedirector/WithFileExtension/verden-ifoelge-gram-2018-10-23.mp3?highestBitrate=True&podcastDownload=True
-      media_content_type: music
+      media_content_id: "{{states.sensor.dr_p1_verden_i_foelge_gram.state}}"
+      media_content_type: "audio/mp4"
   id: 00222b634c9144c995932efdce6c35c3
 - id: 3d0a368dcfd34322b52e45010980c26f
   alias: Play DR P6 Beat
